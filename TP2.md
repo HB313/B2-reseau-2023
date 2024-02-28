@@ -322,3 +322,59 @@ rtt min/avg/max/mdev = 0.658/0.978/1.563/0.350 ms
 
 
 ```
+
+### 2. Web web web
+
+#### ☀️ Sur web.lan2.tp2
+
+```
+[user@web www]$ mkdir site_nul
+mkdir: cannot create directory ‘site_nul’: Permission denied
+[user@web www]$ sudo !!
+sudo mkdir site_nul
+[user@web www]$ ls
+site_nul
+[user@web www]$ ls
+site_nul
+[user@web www]$ cd site_nul/
+[user@web site_nul]$ touch index.thml
+touch: cannot touch 'index.thml': Permission denied
+[user@web site_nul]$ sudo !!
+sudo touch index.thml
+[user@web site_nul]$ ls
+index.thml
+[user@web site_nul]$ sudo vim index.thml
+[user@web site_nul]$ cd
+[user@web ~]$ sudo vim /etc/nginx/nginx.conf
+[user@web ~]$ sudo systemctl restart nging
+Failed to restart nging.service: Unit nging.service not found.
+[user@web ~]$ sudo systemctl restart nginx
+[user@web ~]$ sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
+sudo firewall-cmd --reload
+success
+success
+[user@web ~]$ sudo ss -tulpn | grep :80
+tcp   LISTEN 0      511          0.0.0.0:80        0.0.0.0:*    users:(("nginx",pid=1455,fd=6),("nginx",pid=1454,fd=6),("nginx",pid=1453,fd=6))
+[user@web ~]$ sudo firewall-cmd --list-ports
+80/tcp
+
+```
+
+#### ☀️ Sur node1.lan1.tp2
+
+```
+[user@node1 ~]$ curl http://site_nul.tp2
+curl: (6) Could not resolve host: site_nul.tp2
+[user@node1 ~]$ sudo vi /etc/hosts
+[sudo] password for user: 
+[user@node1 ~]$ curl http://site_nul.tp2
+<html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+<hr><center>nginx/1.20.1</center>
+</body>
+</html>
+[user@node1 ~]$ 
+
+```
